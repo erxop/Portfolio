@@ -1,2 +1,2 @@
 This is my portfolio
-I built this with HTML, CSS, and JavaScript
+ built with HTML, CSS, and JavaScript
