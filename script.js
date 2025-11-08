@@ -10,28 +10,11 @@ const observer = new IntersectionObserver((entries) => {
   entries.forEach(e => {
     if (e.isIntersecting) e.target.classList.add('show');
   });
-},{threshold: 0.14});
+},{ threshold: 0.14 });
+
 $$('.content-section').forEach(s => observer.observe(s));
 
-// contact form (mailto fallback)
-const form = $('#contact-form');
-form.addEventListener('submit', (ev) => {
-  ev.preventDefault();
-  const name = form.name.value.trim();
-  const email = form.email.value.trim();
-  const message = form.message.value.trim();
-  if (!name || !email || !message) {
-    alert('Please fill all fields.');
-    return;
-  }
-  const subject = encodeURIComponent(`Portfolio message from ${name}`);
-  const body = encodeURIComponent(`${message}\n\n— ${name}\n${email}`);
-  // Replace the email address below with your real email
-  window.location.href = `mailto:your-email@example.com?subject=${subject}&body=${body}`;
-  form.reset();
-});
-
-// PROJECT MODAL logic (no code links — only live demos)
+// PROJECT MODAL logic
 const cards = $$('.project-card');
 const modal = $('#modal');
 const modalPanel = modal.querySelector('.modal-panel');
@@ -64,7 +47,6 @@ function openModal(i){
   modal.setAttribute('aria-hidden','false');
   modal.classList.add('open');
   document.body.style.overflow = 'hidden';
-  // focus trap: give panel focus for keyboard users
   modalPanel.focus();
 }
 
@@ -95,7 +77,7 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
 });
 
-// Hero canvas (subtle particles)
+// Hero canvas (particles)
 const canvas = document.getElementById('bgCanvas');
 const ctx = canvas.getContext('2d');
 
@@ -147,3 +129,29 @@ function loop(){
   requestAnimationFrame(loop);
 }
 loop();
+
+// CONTACT FORM (Formspree)
+const contactForm = $('#contact-form');
+if (contactForm) {
+  contactForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const formData = new FormData(contactForm);
+    try {
+      const response = await fetch('https://formspree.io/f/xeovjkdn', {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+      if (response.ok) {
+        alert('Thanks! Your message was sent.');
+        contactForm.reset();
+      } else {
+        alert('Oops! There was a problem submitting your form.');
+      }
+    } catch (err) {
+      alert('Oops! There was a problem submitting your form.');
+    }
+  });
+}
