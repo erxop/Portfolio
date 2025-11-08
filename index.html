@@ -90,12 +90,13 @@
 
     <section id="contact">
   <h2>Contact Me</h2>
-  <form class="contact-form">
-    <input type="text" placeholder="Your Name" required />
-    <input type="email" placeholder="Your Email" required />
-    <textarea placeholder="Your Message" rows="4" required></textarea>
-    <button type="submit" class="btn">Send Message</button>
-  </form>
+  <form class="contact-form" action="https://formspree.io/f/xeovjkdn" method="POST">
+  <input type="hidden" name="_subject" value="New message from your portfolio site!" />
+  <input type="text" placeholder="Your Name" required />
+  <input type="email" placeholder="Your Email" required />
+  <textarea placeholder="Your Message" rows="4" required></textarea>
+  <button type="submit" class="btn">Send Message</button>
+</form>
 
   <div class="socials">
     <h3>Connect with me:</h3>
